@@ -1,10 +1,7 @@
-package dev.portfolio.oussama.dto.Auth;
+package dev.portfolio.oussama.dto.welcome;
 
 import dev.portfolio.oussama.model.Welcome;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
 
 @Data
 public class WelcomeResponse {

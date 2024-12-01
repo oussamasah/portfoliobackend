@@ -1,11 +1,6 @@
 package dev.portfolio.oussama.controller;
 
-import dev.portfolio.oussama.dto.Auth.AuthRequest;
-import dev.portfolio.oussama.dto.Auth.AuthResponse;
-import dev.portfolio.oussama.dto.Auth.WelcomeRequest;
-import dev.portfolio.oussama.dto.Auth.WelcomeResponse;
-import dev.portfolio.oussama.model.Welcome;
-import dev.portfolio.oussama.service.AuthService;
+import dev.portfolio.oussama.dto.welcome.WelcomeResponse;
 import dev.portfolio.oussama.service.WelcomeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

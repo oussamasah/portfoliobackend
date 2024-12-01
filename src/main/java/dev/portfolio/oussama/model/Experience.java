@@ -5,17 +5,15 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Service {
+public class Experience {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false,columnDefinition = "Text")
-    private String description;
-
+    private String name;
     @Column(nullable = false)
-    private String icon;
+    private String daterange;
+    @Column(nullable = false,columnDefinition = "TEXT")
+    private String description;
 }

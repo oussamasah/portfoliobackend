@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,30 +23,26 @@ import java.util.List;
 public class SecurityConfig  {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for development
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-
-                        // Allow public access to static files
-                        .requestMatchers("/uploads/**").permitAll()
-                        // Allow public access to authentication endpoints
-                        .requestMatchers("/api/auth/**").permitAll()
-                        // Secure welcome save endpoint (authentication required)
-                        .requestMatchers("/api/welcome/save").authenticated()
-                        // Allow OPTIONS requests for CORS preflight
-                        .requestMatchers("/**", "OPTIONS").permitAll()
+                        .requestMatchers("/uploads/**", "/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers( "/api/contact/save").permitAll()
+                        .requestMatchers( "/api/recaptcha/verify").permitAll()
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/service/**").authenticated()
+                        .requestMatchers( "/api/welcome/**").authenticated()
+                        .requestMatchers("/api/service/**").authenticated()
+                        .requestMatchers( "/api/contact/**").authenticated()
 
-                        // Secure all other endpoints
                         .anyRequest().authenticated()
                 )
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -66,5 +63,9 @@ public class SecurityConfig  {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

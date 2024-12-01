@@ -1,4 +1,4 @@
-package dev.portfolio.oussama.dto.Auth;
+package dev.portfolio.oussama.dto.welcome;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
