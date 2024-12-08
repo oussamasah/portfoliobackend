@@ -22,13 +22,9 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Spring Boot Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKER_IMAGE_NAME }}:${{ secrets.DOCKER_IMAGE_TAG }} .
-
     - name: Push Spring Boot Docker image to Docker Hub
       run: |
-        docker push ${{ secrets.DOCKER_IMAGE_NAME }}:${{ secrets.DOCKER_IMAGE_TAG }}
+        docker push osahraoui70/api-portfolio:latest
 
     - name: SSH into VPS and deploy
       uses: appleboy/ssh-action@v0.1.0
@@ -41,7 +37,7 @@ jobs:
           cd /home/deployuser/api-portfolio
           
           # Pull the latest Spring Boot image
-          docker pull ${{ secrets.DOCKER_IMAGE_NAME }}:${{ secrets.DOCKER_IMAGE_TAG }}
+          docker pull osahraoui70/api-portfolio:latest
           
           # Pull PostgreSQL if necessary
           docker pull postgres:13
