@@ -38,14 +38,14 @@ jobs:
 
       - name: Push Spring Boot Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_IMAGE_NAME }}:${{ secrets.DOCKER_IMAGE_TAG }}
+          docker push ${{secrets.DOCKER_IMAGE_NAME}}:${{secrets.DOCKER_IMAGE_TAG}}
 
       - name: SSH into VPS and deploy
         uses: appleboy/ssh-action@v0.1.0
-        with:   
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.DEPLOYUSER_VPS_SECRET }}
+        with:
+          host: ${{secrets.VPS_IP}}
+          username: ${{secrets.VPS_USER}}
+          key: ${{secrets.DEPLOYUSER_VPS_SECRET}}
           port: 49159
           script: |
             cd /home/deployuser/api-portfolio
@@ -57,7 +57,7 @@ jobs:
             docker pull postgres:13
             
             # Clean up old containers and images
-            docker-compose down
+            docker-compose down 
             docker system prune -f
             
             # Start the containers again
