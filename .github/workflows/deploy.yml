@@ -47,6 +47,10 @@ jobs:
           username: ${{secrets.VPS_USER}}
           key: ${{secrets.DEPLOYUSER_VPS_SECRET}}
           port: 49159
+          run: |
+            echo "VPS IP: ${{ secrets.VPS_IP }}"
+            echo "VPS User: ${{ secrets.VPS_USER }}"
+            echo "VPS key: ${{ secrets.DEPLOYUSER_VPS_SECRET }}"
           script: |
             cd /home/deployuser/api-portfolio
             
