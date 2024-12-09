@@ -18,7 +18,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'  # Use 'temurin' for Adoptium
-
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
       - name: Build Spring Boot JAR
         run: |
           mvn clean package
