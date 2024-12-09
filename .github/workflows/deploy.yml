@@ -45,7 +45,7 @@ jobs:
         with:
           host: 57.128.177.237
           username: deployuser
-          key: ${{secrets.DEPLOYUSER_VPS_SECRET}}
+          password: amassuo
           port: 49159
 
           script: |
