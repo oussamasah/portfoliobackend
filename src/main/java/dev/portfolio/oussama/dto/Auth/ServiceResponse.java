@@ -1,0 +1,15 @@
+package dev.portfolio.oussama.dto.Auth;
+
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
+@Data
+public class ServiceResponse {
+
+
+        private String title;
+
+
+
+}

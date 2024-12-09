@@ -1,0 +1,9 @@
+package dev.portfolio.oussama.dto.Auth;
+
+import lombok.Data;
+
+@Data
+public class AuthRequest {
+    private String username;
+    private String password;
+}
