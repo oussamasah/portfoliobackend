@@ -3,7 +3,7 @@ name: Deploy Spring Boot to VPS with PostgreSQL
 on:
   push:
     branches:
-      - main  # Or the branch you want to deploy from
+      - deployment  # Or the branch you want to deploy from
 
 jobs:
   deploy:
