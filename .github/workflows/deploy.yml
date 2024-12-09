@@ -46,7 +46,7 @@ jobs:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.DEPLOYUSER_VPS_SECRET }}
-          port: 22
+          port: 49159
           script: |
             cd /home/deployuser/api-portfolio
             
