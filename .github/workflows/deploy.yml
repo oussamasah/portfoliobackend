@@ -43,9 +43,9 @@ jobs:
       - name: SSH into VPS and deploy
         uses: appleboy/ssh-action@v0.1.0
         with:
-          host: 57.128.177.237
-          username: deployuser
-          password: amassuo
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
           port: 49159
 
           script: |
