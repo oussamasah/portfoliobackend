@@ -26,8 +26,8 @@ public class SecurityConfig  {
     private String allowedOrigins;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
-        http
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity https,JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+        https
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/uploads/**", "/api/auth/**").permitAll() // Allow unauthenticated access to these routes
