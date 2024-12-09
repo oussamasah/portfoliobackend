@@ -1,8 +1,5 @@
 package dev.portfolio.oussama.service;
 
-import com.cybozu.labs.langdetect.Detector;
-import com.cybozu.labs.langdetect.DetectorFactory;
-import com.cybozu.labs.langdetect.LangDetectException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.portfolio.oussama.model.Skills;
 import dev.portfolio.oussama.model.Welcome;
@@ -27,32 +24,24 @@ import java.util.stream.Collectors;
 @Service
 public class WelcomeService {
     private final WelcomeRepository welcomeRepository;
-    private final StanfordCoreNLP englishPipeline;
-    private final StanfordCoreNLP frenchPipeline;
     private StanfordCoreNLP pipelineToUse;
     private  static Set<String> skillSynonyms;
     private static Set<String> allPossibleSkills;
     private final LevenshteinDistance distance = new LevenshteinDistance();
     private final  SkillsRepository ai_repo;
-    public WelcomeService(WelcomeRepository welcomeRepository , SkillsRepository AIrepo) throws LangDetectException {
+    public WelcomeService(WelcomeRepository welcomeRepository , SkillsRepository AIrepo)  {
         this.welcomeRepository = welcomeRepository;
         this.ai_repo = AIrepo;
     String profilePath = Paths.get("src\\main\\java\\dev\\portfolio\\oussama\\util\\profiles").toAbsolutePath().toString();
-       DetectorFactory.loadProfile(profilePath);
+
         // Set up NLP pipelines (English and French)
         Properties englishProps = new Properties();
-        englishProps.setProperty("annotators", "tokenize,ssplit,pos,lemma");
+        englishProps.setProperty("annotators", "tokenize,ssplit");
         englishProps.setProperty("tokenize.language", "en");
         englishProps.setProperty("ner.model", "edu/stanford/nlp/models/ner/english.muc.7class.caseless.distsim.crf.ser.gz");
-        englishProps.setProperty("pos.model", "edu/stanford/nlp/models/pos-tagger/english-caseless-left3words-distsim.tagger");
-        this.englishPipeline = new StanfordCoreNLP(englishProps);
+        this.pipelineToUse = new StanfordCoreNLP(englishProps);
 
-        Properties frenchProps = new Properties();
-        frenchProps.setProperty("annotators", "tokenize,ssplit,pos,lemma");
-        frenchProps.setProperty("tokenize.language", "fr");
-        frenchProps.setProperty("ner.model", "edu/stanford/nlp/models/ner/french-wikiner-4class.crf.ser.gz");
-        frenchProps.setProperty("pos.model", "edu/stanford/nlp/models/pos-tagger/french-ud.tagger");
-        this.frenchPipeline = new StanfordCoreNLP(frenchProps);
+
 
         // Load possible skills and skill synonyms from files
 
@@ -71,13 +60,8 @@ public class WelcomeService {
                 .stream()
                 .map(Skills::getSkill) // Extract the `skill` field
                 .collect(Collectors.toSet());
-        String detectedLang = detectLanguage(jobDescription);
 
-        if ("fr".equals(detectedLang)) {
-            this.pipelineToUse = frenchPipeline;
-        } else {
-            this.pipelineToUse = englishPipeline;
-        }
+
 
         String[] words = tokenizeJobDescription(jobDescription);
 
@@ -95,18 +79,6 @@ public class WelcomeService {
         return result;
     }
 
-    private String detectLanguage(String text) {
-        try {
-
-
-            Detector detector = DetectorFactory.create();
-            detector.append(text);
-            return detector.detect();
-        } catch (LangDetectException e) {
-            e.printStackTrace();
-            return "en"; // Default to English
-        }
-    }
 
     /*private String[] tokenizeJobDescription(String jobDescription) {
         // Convert to lowercase (optional, depending on use case)

@@ -1,6 +1,6 @@
 package dev.portfolio.oussama.controller;
 
-import com.cybozu.labs.langdetect.LangDetectException;
+
 import dev.portfolio.oussama.dto.welcome.WelcomeResponse;
 import dev.portfolio.oussama.service.WelcomeService;
 import org.springframework.http.ResponseEntity;
