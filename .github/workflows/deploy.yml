@@ -43,15 +43,15 @@ jobs:
       - name: SSH into VPS and deploy
         uses: appleboy/ssh-action@v0.1.0
         with:
-          host: ${{secrets.VPS_IP}}
-          username: ${{secrets.VPS_USER}}
+          host: 57.128.177.237
+          username: deployuser
           key: ${{secrets.DEPLOYUSER_VPS_SECRET}}
           port: 49159
-          run: |
+
+          script: |
             echo "VPS IP: ${{ secrets.VPS_IP }}"
             echo "VPS User: ${{ secrets.VPS_USER }}"
             echo "VPS key: ${{ secrets.DEPLOYUSER_VPS_SECRET }}"
-          script: |
             cd /home/deployuser/api-portfolio
             
             # Pull the latest Spring Boot image
