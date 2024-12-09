@@ -45,7 +45,7 @@ jobs:
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          password: ${{ secrets.DEPLOYUSER_VPS_SECRET }}
           port: 49159
 
           script: |
