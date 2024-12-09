@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'
+          distribution: 'temurin'  # Use 'temurin' for Adoptium
 
       - name: Build Spring Boot JAR
         run: |
